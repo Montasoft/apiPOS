@@ -1,0 +1,8 @@
+Crear el entorno virtual
+
+Instalar requiremen.txt
+
+Crear migraciones
+
+Crear el superusuario
+    python manage.py createsuperuser

@@ -95,6 +95,7 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
         
         # Modificar el campo que no viene en el formulario
         instance.updater = 'Usuario'
+        print(instance)
         
         # Guardar los cambios en la base de datos
         instance.save()

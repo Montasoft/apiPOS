@@ -53,19 +53,25 @@ def cargaInicial():
         ))
     FormaPago.objects.bulk_create(listaFormasdePago)
 
+    print("creado: Formas de pago")
 
     # Precargar Proveedor
     proveedor = Proveedor(nombre = "No Determinado")
     proveedor.save()
 
+    print("creado: Proveedor")
 
     # Precargar Categoría
     categoria1 = Categoria(nombre = "Sin Categoria")
     categoria1.save()
 
+    print("creado: Categoria")
+
     # Precargar SubCategoría
     subcategoria1 = SubCategoria(nombre = "Sin SubCategoria", categoria=categoria1)
     subcategoria1.save()
+
+    print("creado: subcategoria")
 
     # Precargar estado de venta
     estadoVenta=[
@@ -82,6 +88,7 @@ def cargaInicial():
         ))
     EstadoVenta.objects.bulk_create(listaEstadoVenta)
 
+    print("creado: Estado de Venta")
 
     # Precargar estado de compra
     estadoCompra=[
@@ -97,6 +104,8 @@ def cargaInicial():
             nombre = i
         ))
     EstadoCompra.objects.bulk_create(listaEstadoCompra)
+
+    print("creado: Estado de compra")
 
     #****************** Precargar estado de producto ******************
     estadosproducto=[

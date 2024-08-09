@@ -95,6 +95,7 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
         
         # Modifica cualquier campo adicional que no provenga del formulario
         instance.updater = 'Usuario'
+        print(instance)
         
         # Guarda los cambios en la base de datos
         serializer.save()  # Guarda los cambios del serializador

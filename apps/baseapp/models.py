@@ -85,7 +85,7 @@ class Banco(BaseModel):
 
 
 #######################################################################################
-class Departamento(models.Model):
+class Departamento(BaseModel):
     nombre = models.CharField(max_length=50)
     cod_dane = models.CharField(max_length=2, unique=True)
     
@@ -98,7 +98,7 @@ class Departamento(models.Model):
         return self.nombre
         
     def get_absolute_url(self):
-        return reverse('baseapp:departamentodetail', kwargs={'pk' :self.id})
+        return reverse('DeparetamentoDetailView', kwargs={'pk' :self.id})
 
 #######################################################################################
 class Ciudad(BaseModel):
@@ -115,7 +115,7 @@ class Ciudad(BaseModel):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('baseapp:ciudaddetail', kwargs={'pk' :self.id})
+        return reverse('CiudadDetailView', kwargs={'pk' :self.id})
 
 #######################################################################################
 class TipoDocumento(BaseModel):
@@ -131,7 +131,7 @@ class TipoDocumento(BaseModel):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('baseapp:tipodocumentodetail', kwargs={'pk' :self.id})
+        return reverse('baseapp:TipoDocumentoDetailView', kwargs={'pk' :self.id})
 
 
 #######################################################################################

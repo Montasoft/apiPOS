@@ -7,6 +7,13 @@ from django.db.models import F, Sum, FloatField     # para calcular el total de 
 
 
 class BaseModel(models.Model):
+    '''
+    Estado del registro
+    0 creado
+    1 
+    2 eliminado
+    
+    '''
     state = models.IntegerField(default=0)
     created = models.DateTimeField(auto_now=False, auto_now_add=True, null=True, blank=True)
     creater = models.CharField(max_length=30, null=True, blank=True)

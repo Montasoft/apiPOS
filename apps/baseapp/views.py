@@ -132,8 +132,6 @@ class TipoCuentaBancariaCreateUpdateView(BaseCreateUpdateView):
 
 
 class BaseDeleteView(APIView):
-    model = None
-    serializer_class = None
 
     def patch(self, request):
         try:
@@ -144,6 +142,7 @@ class BaseDeleteView(APIView):
 
         # Marcar registro como eliminado
         instance.deleter = 'Usuario'
+        instance.state = 2
         instance.deleted = timezone.now()
         instance.save()
 

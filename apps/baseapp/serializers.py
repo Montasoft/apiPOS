@@ -44,7 +44,7 @@ class CiudadDetalleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ciudad
    
-        fields = 'id', 'nombre', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
+        fields = 'id', 'nombre', 'departamento', 'cod_dane', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 #####################################################################
 

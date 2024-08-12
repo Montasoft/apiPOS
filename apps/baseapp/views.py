@@ -157,21 +157,21 @@ class DepartamentoDeleteView(BaseDeleteView):
     model = Departamento
     serializer_class = DepartamentoDetalleSerializer
 
-class CiudadDeleteView(BaseListView):
-    nidek = Ciudad
-    serializer_class = CiudadListaSerializer
+class CiudadDeleteView(BaseDeleteView):
+    model = Ciudad
+    serializer_class = CiudadDetalleSerializer
     
-class TipoDocumentoDeleteView(BaseListView):
-    nidek = TipoDocumento
-    serializer_class = TipoDocumentoListaSerializer
+class TipoDocumentoDeleteView(BaseDeleteView):
+    model = TipoDocumento
+    serializer_class = TipoDocumentoDetalleSerializer
     
-class FormaPagoDeleteView(BaseListView):
-    nidek = FormaPago
-    serializer_class = FormaPagoListaSerializer
+class FormaPagoDeleteView(BaseDeleteView):
+    model = FormaPago
+    serializer_class = FormaPagoDetalleSerializer
     
-class TipoCuentaBancariaDeleteView(BaseListView):
-    nidek = TipoCuentaBancaria
-    serializer_class = TipoCuentaBancariaListaSerializer
+class TipoCuentaBancariaDeleteView(BaseDeleteView):
+    model = TipoCuentaBancaria
+    serializer_class = TipoCuentaBancariaDetalleSerializer
     
 
 

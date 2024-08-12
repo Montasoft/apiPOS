@@ -18,7 +18,7 @@ urlpatterns = [
     path('Departamento/<int:pk>/', DepartamentoDetailView.as_view(), name='DeparetamentoDetailView'),
     path('Departamento/create/', DepartamentoCreateUpdateView.as_view(), name='DeparetamentoCreateUpdateView'),
     path('Departamento/update/<int:pk>', DepartamentoCreateUpdateView.as_view(), name='DeparetamentoCreateUpdateView'),
-    path('Departamento/delete/', DepartamentoDeleteView.as_view(), name='DeparetamentoDeleteView'),
+    path('Departamento/delete/', DepartamentoDeleteView.as_view(), name='DepartamentoDeleteView'),
 
     path('Ciudad/', CiudadListView.as_view(), name='CiudadListView'),
     path('Ciudad/<int:pk>/', CiudadDetailView.as_view(), name='CiudadDetailView'),

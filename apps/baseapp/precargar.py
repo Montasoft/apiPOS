@@ -1,5 +1,5 @@
 from apps.compras.models import EstadoCompra
-from .models import Banco, Departamento, Ciudad, FormaPago, TipoDocumento, Menu, SubMenu
+from .models import Banco, Departamento, Ciudad, FormaPago, TipoCuentaBancaria, TipoDocumento, Menu, SubMenu
 from apps.compras.models import Proveedor
 from apps.inventario.models import Producto, Categoria, SubCategoria, EstadoProducto
 from apps.ventas.models import EstadoVenta, Cliente
@@ -124,6 +124,22 @@ def cargaInicial():
         estado =EstadoProducto.objects.get(pk=1),
     )
     producto.save()
+
+
+
+    # Precargar Tipo de Cuenta Bancaria
+    tipoCuentaBancaria=[
+        "Ahorros",
+        "Corriente",
+    ]
+    listaTipoCuentaBancaria = list()
+    for i in tipoCuentaBancaria:
+        listaTipoCuentaBancaria.append(TipoCuentaBancaria(
+            nombre = i
+        ))
+    TipoCuentaBancaria.objects.bulk_create(listaTipoCuentaBancaria)
+
+
 
     # precargar departamentos
     dep = {

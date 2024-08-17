@@ -22,6 +22,11 @@ class BaseListView (generics.ListAPIView):
     pagination_class = LimitOffsetPagination
     pagination_class.page_size = 20
 
+########################################################################################
+########  VISTAS GENÉRICAS PARA lISTA DE CADA MODELO ################################
+########################################################################################
+
+
 class BancoListView(BaseListView):
     queryset = Banco.objects.all()
     serializer_class = BancoListaSerializer
@@ -96,10 +101,11 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
         # Modifica cualquier campo adicional que no provenga del formulario
         instance.updater = 'Usuario'
         print(instance)
+        print(serializer)
         
         # Guarda los cambios en la base de datos
-        serializer.save()  # Guarda los cambios del serializador
         instance.save()    # Guarda los cambios adicionales
+        serializer.save()  # Guarda los cambios del serializador
 
 class BancoCreateUpdateView(BaseCreateUpdateView):
     queryset = Banco.objects.all()

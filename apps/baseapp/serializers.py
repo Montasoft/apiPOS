@@ -53,14 +53,14 @@ class TipoDocumentoListaSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoDocumento
    #     fields = '__all__'
-        fields = 'id', 'nombre', 'get_absolute_url'
+        fields = 'id', 'cod', 'nombre', 'get_absolute_url'
 
 #detalle de cada TipoDocumento
 class TipoDocumentoDetalleSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoDocumento
    
-        fields = 'id', 'nombre', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
+        fields = 'id', 'cod', 'nombre', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 #####################################################################
 
@@ -76,7 +76,7 @@ class FormaPagoDetalleSerializer(serializers.ModelSerializer):
     class Meta:
         model = FormaPago
    
-        fields = 'id', 'nombre', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
+        fields = 'id', 'nombre', 'descripcion', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 #####################################################################
 

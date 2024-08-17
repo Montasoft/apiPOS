@@ -68,7 +68,7 @@ class Proveedor(Tercero):
         return  self.nombre
 
     def get_absolute_url(self):
-        return reverse('compras:proveedordetail', kwargs={'pk' :self.id})
+        return reverse('compras:ProveedorDetailView', kwargs={'pk' :self.id})
         
 
 class Compra(BaseModel):
@@ -105,7 +105,7 @@ class Compra(BaseModel):
 
 
 #######################################################################################
-class CompraDetalles(BaseModel):
+class CompraDetalle(BaseModel):
     compra = models.ForeignKey(Compra, on_delete=models.CASCADE)
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     paquetes = models.DecimalField(max_digits=10, decimal_places=2)

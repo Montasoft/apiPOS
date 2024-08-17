@@ -112,7 +112,7 @@ class Ciudad(BaseModel):
     nombre = models.CharField(max_length=150)
     departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE)
     cod_dane = models.CharField(max_length=5, unique=True)
-
+    
     class Meta:
         ordering =['nombre']
         verbose_name = "Ciudad"
@@ -138,7 +138,7 @@ class TipoDocumento(BaseModel):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('baseapp:TipoDocumentoDetailView', kwargs={'pk' :self.id})
+        return reverse('TipoDocumentoDetailView', kwargs={'pk' :self.id})
 
 
 #######################################################################################
@@ -155,7 +155,7 @@ class FormaPago(BaseModel):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('baseapp:formapagodetail', kwargs={'pk' :self.id})
+        return reverse('FormaPagoDetailView', kwargs={'pk' :self.id})
 
 
 #######################################################################################
@@ -176,7 +176,7 @@ class Tercero(BaseModel):
 
 
 #######################################################################################
-class TipoCuentaBancaria(models.Model):
+class TipoCuentaBancaria(BaseModel):
     nombre = models.CharField(max_length=30)
 
     class Meta:
@@ -188,7 +188,7 @@ class TipoCuentaBancaria(models.Model):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('baseapp:tipocuentabancaria', kwargs={'pk' :self.id})
+        return reverse('TipoCuentaBancariaDetailView', kwargs={'pk' :self.id})
 
 
     

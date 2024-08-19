@@ -35,24 +35,8 @@ class EstadoCompra(BaseModel):
         return self.nombre
     
     def get_absolute_url(self):
-        return reverse('compra:estadocompradetail', kwargs={'pk' :self.id})
+        return reverse('compras:EstadoCompraDetailView', kwargs={'pk' :self.id})
     
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(EstadoCompra, self).save(*args, **kwargs)
-
 
 
 #######################################################################################
@@ -69,7 +53,7 @@ class Proveedor(Tercero):
 
     def get_absolute_url(self):
         return reverse('compras:ProveedorDetailView', kwargs={'pk' :self.id})
-        
+
 
 class Compra(BaseModel):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
@@ -89,6 +73,10 @@ class Compra(BaseModel):
 
     def __str__(self):
         return  str(self.id)
+    
+    def get_absolute_url(self):
+        return reverse('compras:CompraDetailView', kwargs={'pk' :self.id})
+
 
     @property
     def total(self): 
@@ -100,8 +88,6 @@ class Compra(BaseModel):
            total=Sum(F('paquetes')*F('unidades')* F('neto'), output_field=FloatField())
         )['total']
 
-
-        return super(Compra, self).save(*args, **kwargs)
 
 
 #######################################################################################
@@ -130,6 +116,11 @@ class CompraDetalle(BaseModel):
     def __str__(self):  
         cantidad =self.paquetes*self.unidades
         return f'({cantidad}) unidades de {self.producto.nombre}'
+    
+    def get_absolute_url(self):
+        return reverse('compras:CompraDetalleDetailView', kwargs={'pk' :self.id})
+
+
 
  #######################################################################################
 class PagoCompra(BaseModel):
@@ -149,18 +140,6 @@ class PagoCompra(BaseModel):
     def __str__(self):
         return  str(self.valor_pago)
 
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(PagoCompra, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('compras:PagoCompraDetailView', kwargs={'pk' :self.id})
+    

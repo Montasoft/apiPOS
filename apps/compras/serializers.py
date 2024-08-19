@@ -69,8 +69,7 @@ class CompraDetalleDetalleSerializer(serializers.ModelSerializer):
     class Meta:
         model = CompraDetalle
    
-        fields = 'id', 'producto', 'cantidad', 'neto', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
-
+        fields = 'id', 'compra', 'producto', 'paquetes', 'unidades', 'valor_paquete', 'descuento_pre_iva', 'descuento_pos_iva', 'iva', 'flete', 'neto', 'observacion', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 
 ####################################################################

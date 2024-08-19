@@ -7,7 +7,13 @@ from django.db.models import F, Sum, FloatField     # para calcular el total de 
 from apps.baseapp.models import BaseModel
 from django.views import generic
 
-
+'''
+Define los modelos:
+    Categoria
+    SubCategoria
+    EstadoProducto
+    Producto
+'''
 #######################################################################################
 class Categoria(BaseModel):
     nombre= models.CharField(max_length=50)
@@ -22,7 +28,7 @@ class Categoria(BaseModel):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('inventario:categoriadetail', kwargs={'pk' :self.id})
+        return reverse('inventario:CategoriaDetailView', kwargs={'pk' :self.id})
         
  
 ####################################################################################### 
@@ -40,7 +46,7 @@ class SubCategoria(BaseModel):
         return f'categoria: {self.categoria.nombre} - Subcategoría  {self.nombre}'
 
     def get_absolute_url(self):
-        return reverse('inventario:subcategoriadetail', kwargs={'pk' :self.id})
+        return reverse('inventario:SubCategoriaDetailView', kwargs={'pk' :self.id})
 
 
 #######################################################################################
@@ -53,12 +59,11 @@ class EstadoProducto(BaseModel):
         verbose_name = "Estado del producto"
         verbose_name_plural = "Estados de productos"
 
-
     def __str__(self):
         return  self.nombre
     
     def get_absolute_url(self):
-        return reverse('inventario:estadoproductodetail', kwargs={'pk' :self.id})
+        return reverse('inventario:EstadoProductoDetailView', kwargs={'pk' :self.id})
 
 
 
@@ -92,4 +97,4 @@ class   Producto(BaseModel):
         return str(self.nombre)
     
     def get_absolute_url(self): 
-        return reverse('inventario:productodetail', kwargs={'pk' :self.id})
+        return reverse('inventario:ProductoDetailView', kwargs={'pk' :self.id})

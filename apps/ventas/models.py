@@ -47,22 +47,6 @@ class Cliente(Tercero):
     def get_absolute_url(self):
         return reverse('POS:Cliente', kwargs={'pk' :self.id})
 
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(Cliente, self).save(*args, **kwargs)
-
 
 #######################################################################################
 class PreVenta(BaseModel):
@@ -81,22 +65,6 @@ class PreVenta(BaseModel):
 
     def __str__(self):
         return  str(self.id)
-
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(PreVenta, self).save(*args, **kwargs)
 
 
 #######################################################################################
@@ -124,28 +92,6 @@ class Venta(BaseModel):
         return self.ventadetalles_set.aggregate(
            total=Sum(F('cantidad')*(F('neto')), output_field=FloatField())
        )['total']
-
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        print("self.id", self.id)
-        print("self.updater", self.updater)
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-            self.estado = EstadoVenta(id=1) # creada
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater        
-            if self.total != None:
-                if self.estado == 1:
-                    self.estado = EstadoVenta(id=2) # abierta
-
-
-        return super(Venta, self).save(*args, **kwargs)
 
 
 #######################################################################################
@@ -196,21 +142,6 @@ class VentaDetalles(BaseModel):
     def get_cost(self):
         return self.producto.costo
 
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(VentaDetalles, self).save(*args, **kwargs)
 
 
 #######################################################################################
@@ -231,19 +162,4 @@ class PagoVenta(BaseModel):
     def __str__(self):
         return  str(self.valor_pago)
 
-    def save(self, *args, **kwargs):
-        ''' Al guardar actualizar fecha y usuario del registro 
-            se recibe el usuario en el campo de updater
-            pero si es registro nuevo se guardará en creater '''
-        
-        if not self.id:
-            self.created = timezone.now()
-            self.creater = self.updater
-            self.updater = None
-        else:
-            print( "save - update")
-            self.updated = timezone.now()
-            self.updater = self.updater
-
-        return super(PagoVenta, self).save(*args, **kwargs)
-
+   

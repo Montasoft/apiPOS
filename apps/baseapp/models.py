@@ -23,7 +23,7 @@ class BaseModel(models.Model):
     deleter = models.CharField(max_length=30, null=True, blank=True)
 
     class Meta:
-        abstract = True  
+        abstract = True 
 
     def save(self, *args, **kwargs):
         ''' Al guardar actualizar fecha y usuario del registro 
@@ -32,6 +32,7 @@ class BaseModel(models.Model):
         
         if not self.pk: # Si es un nuevo registro
             self.creater = self.updater
+            print( "nuevo registro", self.creater, " - ", self.updater)
             self.updater = None
         else:   # Si es una actualización
             if not self.deleter: # pero no ha pedido eliminarlo
@@ -39,7 +40,8 @@ class BaseModel(models.Model):
                 self.updated = timezone.now()
                 self.updater = self.updater
 
-        return super(BaseModel, self).save(*args, **kwargs)
+           # Finalmente, guarda la instancia
+        super().save(*args, **kwargs)
 
 #######################################################################################
 class Menu(models.Model):

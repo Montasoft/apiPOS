@@ -91,22 +91,26 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
     partial = True  # Permite actualizaciones parciales (PATCH)
 
     def perform_create(self, serializer):
-        # Asignar el valor del campo 'updater' antes de guardar la instancia
-        serializer.save(updater='Usuario')
+        # Asignar el valor del campo 'updater' y 'creater' antes de guardar la instancia
+        user = "usuario1"  
+#        user = self.request.user.username  
+        serializer.save(creater=user, updater=user)
 
+ 
     def perform_update(self, serializer):
         # Obtén la instancia del objeto a actualizar
         instance = serializer.instance
         
         # Modifica cualquier campo adicional que no provenga del formulario
         instance.updater = 'Usuario'
+        
+        # Guarda los cambios del serializador junto con el campo adicional
+        serializer.save(updater=instance.updater)
+
         print(instance)
         print(serializer)
+                                       
         
-        # Guarda los cambios en la base de datos
-        instance.save()    # Guarda los cambios adicionales
-        serializer.save()  # Guarda los cambios del serializador
-
 class BancoCreateUpdateView(BaseCreateUpdateView):
     queryset = Banco.objects.all()
     serializer_class = BancoDetalleSerializer

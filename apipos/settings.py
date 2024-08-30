@@ -42,9 +42,11 @@ INSTALLED_APPS = [
     'apps.compras',
     'apps.inventario',  
     'apps.ventas',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -71,6 +73,12 @@ TEMPLATES = [
         },
     },
 ]
+
+# Permitir el dominio localhost:4200
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+]
+
 
 WSGI_APPLICATION = 'apipos.wsgi.application'
 

@@ -1,7 +1,7 @@
 # urls.py
 
 from django.urls import path
-from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView
+from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, EstadoPedidoCreateUpdateView, EstadoPedidoDeleteView, EstadoPedidoDetailView, EstadoPedidoListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, PedidoCreateUpdateView, PedidoDeleteView, PedidoDetailView, PedidoListView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView
 
 app_name = 'compras'
 
@@ -12,6 +12,12 @@ urlpatterns = [
     path('EstadoCompra/create/', EstadoCompraCreateUpdateView.as_view(), name='EstadoCompraCreateUpdateView'),
     path('EstadoCompra/update/<int:pk>', EstadoCompraCreateUpdateView.as_view(), name='EstadoCompraCreateUpdateView'),
     path('EstadoCompra/delete/', EstadoCompraDeleteView.as_view(), name='EstadoCompraDeleteView'),
+
+    path('EstadoPedido/', EstadoPedidoListView.as_view(), name='EstadoPedidoListView'),
+    path('EstadoPedido/<int:pk>/', EstadoPedidoDetailView.as_view(), name='EstadoPedidoDetailView'),
+    path('EstadoPedido/create/', EstadoPedidoCreateUpdateView.as_view(), name='EstadoPedidoCreateUpdateView'),
+    path('EstadoPedido/update/<int:pk>', EstadoPedidoCreateUpdateView.as_view(), name='EstadoPedidoCreateUpdateView'),
+    path('EstadoPedido/delete/', EstadoPedidoDeleteView.as_view(), name='EstadoPedidoDeleteView'),
 
     path('Proveedor/', ProveedorListView.as_view(), name='ProveedorListView'),
     path('Proveedor/<int:pk>/', ProveedorDetailView.as_view(), name='ProveedorDetailView'),
@@ -24,6 +30,12 @@ urlpatterns = [
     path('Compra/create/', CompraCreateUpdateView.as_view(), name='CompraCreateUpdateView'),
     path('Compra/update/<int:pk>', CompraCreateUpdateView.as_view(), name='CompraCreateUpdateView'),
     path('Compra/delete/', CompraDeleteView.as_view(), name='CompraDeleteView'),
+
+    path('Pedido/', PedidoListView.as_view(), name='PedidoListView'),
+    path('Pedido/<int:pk>/', PedidoDetailView.as_view(), name='PedidoDetailView'),
+    path('Pedido/create/', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),
+    path('Pedido/update/<int:pk>', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),
+    path('Pedido/delete/', PedidoDeleteView.as_view(), name='PedidoDeleteView'),
 
     path('CompraDetalle/', CompraDetalleListView.as_view(), name='CompraDetalleListView'),
     path('CompraDetalle/<int:pk>/', CompraDetalleDetailView.as_view(), name='CompraDetalleDetailView'),

@@ -1,4 +1,4 @@
-from apps.compras.models import EstadoCompra
+from apps.compras.models import EstadoCompra, EstadoPedido
 from .models import Banco, Departamento, Ciudad, FormaPago, TipoCuentaBancaria, TipoDocumento, Menu, SubMenu
 from apps.compras.models import Proveedor
 from apps.inventario.models import Producto, Categoria, SubCategoria, EstadoProducto
@@ -67,6 +67,7 @@ def cargaInicial():
     subcategoria1 = SubCategoria(nombre = "Sin SubCategoria", categoria=categoria1)
     subcategoria1.save()
 
+    ###############################################################
     # Precargar estado de venta
     estadoVenta=[
         "Creada",
@@ -82,7 +83,24 @@ def cargaInicial():
         ))
     EstadoVenta.objects.bulk_create(listaEstadoVenta)
 
+    ###############################################################
+    # Precargar estado de Pedido
+    estadoPedido=[
+        "Requerido",
+        "Solicitado",
+        "Recibido",
+        "Rechazado",
+        "Anulada",
+    ]
 
+    listaEstadoPedido = list()
+    for i in estadoPedido:
+        listaEstadoPedido.append(EstadoPedido(
+            nombre = i
+        ))
+    EstadoPedido.objects.bulk_create(listaEstadoPedido)
+
+    #####################################################################
     # Precargar estado de compra
     estadoCompra=[
         "Creada",

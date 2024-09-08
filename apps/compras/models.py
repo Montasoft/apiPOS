@@ -18,6 +18,29 @@ Se definen las clases:
     CompraDetalles
     PagoCompra
 '''
+
+#######################################################################################
+class EstadoPedido(BaseModel):
+    '''
+    1- requerido (recien creado el registro)
+    2- solicitado (ya se ha pedido a un proveedor)
+    3- recibido (pedido cumplido)
+    4- rechazado (llegó pero no se recibió, se especifica la cuda)
+    5-anulado (pasó el tiempo esperado y no se recició)
+
+    '''
+    nombre = models.CharField(max_length=25)
+    descripcion = models.CharField(max_length=150, null=True, blank=True)
+
+    def __str__(self):
+        return self.nombre
+    
+    def get_absolute_url(self):
+        return reverse('compras:EstadoPedidoDetailView', kwargs={'pk' :self.id})
+    
+
+
+
 #######################################################################################
 class EstadoCompra(BaseModel):
     '''
@@ -55,6 +78,37 @@ class Proveedor(Tercero):
         return reverse('compras:ProveedorDetailView', kwargs={'pk' :self.id})
 
 
+
+
+#######################################################################################
+class Pedido(BaseModel):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE, default=1)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    cantidad_solicitada = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_solicitud = models.DateField()
+    fecha_esperado = models.DateField()
+    valor_esperado = models.DecimalField(max_digits=10, decimal_places=2)
+    fecha_recibido = models.DateField()
+    cantidad_recibida = models.DecimalField(max_digits=10, decimal_places=2)
+    valor_recibido = models.DecimalField(max_digits=10, decimal_places=2)
+    recibido_por = models.CharField(max_length=30, null=True, blank= True)
+    nota = models.CharField(max_length= 250, null=True, blank= True)
+    
+    class Meta:
+        ordering =['id']
+        verbose_name = "Pedido"
+        verbose_name_plural = "Pedidos"
+
+    def __str__(self):
+        return  str(self.id)
+    
+    def get_absolute_url(self):
+        return reverse('compras:PedidoDetailView', kwargs={'pk' :self.id})
+
+
+
+#######################################################################################
 class Compra(BaseModel):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     fecha_compra = models.DateField()

@@ -1,7 +1,7 @@
 # serializers.py
 
 from rest_framework import serializers
-from .models import Compra, CompraDetalle, EstadoCompra , PagoCompra, Proveedor
+from .models import Compra, CompraDetalle, EstadoCompra , PagoCompra, Proveedor, EstadoPedido, Pedido
 
 ####################################################################
 #lista de EstadoCompra
@@ -18,6 +18,24 @@ class EstadoCompraDetalleSerializer(serializers.ModelSerializer):
    
         fields = 'id', 'nombre', 'descripcion', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 #
+
+
+####################################################################
+#lista de EstadoPedido
+class EstadoPedidoListaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EstadoPedido
+   #     fields = '__all__'
+        fields = 'id', 'nombre', 'descripcion', 'get_absolute_url'
+
+#detalle de cada EstadoPedido
+class EstadoPedidoDetalleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EstadoPedido
+   
+        fields = 'id', 'nombre', 'descripcion', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
+#
+
 
 
 ####################################################################
@@ -53,6 +71,23 @@ class CompraDetalleSerializer(serializers.ModelSerializer):
    
         fields = 'id', 'fecha_compra', 'proveedor', 'valor_compra', 'num_factura_proveedor', 'forma_pago', 'fecha_vence', 'fecha_recibido', 'nota', 'estado', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
+
+
+
+####################################################################
+#lista de Pedidos
+class PedidoListaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pedido
+   #     fields = '__all__'
+        fields = 'id', 'producto', 'estado', 'proveedor', 'cantidad', 'valor_esperado', 'get_absolute_url'
+
+#detalle de cada Pedido
+class PedidoDetalleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pedido
+   
+        fields = 'id', 'producto', 'estado', 'proveedor', 'cantidad_solicitada', 'fecha_solicitud', 'fecha_esperado', 'valor_esperado', 'fecha_recibido', 'cantidad_recibida', 'valor_recibido', 'recibido_por', 'nota', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 
 

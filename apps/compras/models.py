@@ -13,8 +13,10 @@ from apps.inventario.models import Producto
 '''
 Se definen las clases:
     EstadoCompra
+    EstadoPedido
     Proveedor
     Compra
+    Pedido
     CompraDetalles
     PagoCompra
 '''
@@ -84,14 +86,14 @@ class Proveedor(Tercero):
 class Pedido(BaseModel):
     producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
     estado = models.ForeignKey(EstadoPedido, on_delete=models.CASCADE, default=1)
-    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
-    cantidad_solicitada = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha_solicitud = models.DateField()
-    fecha_esperado = models.DateField()
-    valor_esperado = models.DecimalField(max_digits=10, decimal_places=2)
-    fecha_recibido = models.DateField()
-    cantidad_recibida = models.DecimalField(max_digits=10, decimal_places=2)
-    valor_recibido = models.DecimalField(max_digits=10, decimal_places=2)
+    proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE,  null=True, blank= True)
+    cantidad_solicitada = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank= True)
+    fecha_solicitud = models.DateField( null=True, blank= True)
+    fecha_esperado = models.DateField( null=True, blank= True)
+    valor_esperado = models.DecimalField(max_digits=10, decimal_places=2,  null=True, blank= True)
+    fecha_recibido = models.DateField( null=True, blank= True)
+    cantidad_recibida = models.DecimalField(max_digits=10, decimal_places=2,  null=True, blank= True)
+    valor_recibido = models.DecimalField(max_digits=10, decimal_places=2,  null=True, blank= True)
     recibido_por = models.CharField(max_length=30, null=True, blank= True)
     nota = models.CharField(max_length= 250, null=True, blank= True)
     

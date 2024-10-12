@@ -1,7 +1,8 @@
 # urls.py
 
 from django.urls import path
-from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, EstadoPedidoCreateUpdateView, EstadoPedidoDeleteView, EstadoPedidoDetailView, EstadoPedidoListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, PedidoCreateUpdateView, PedidoDeleteView, PedidoDetailView, PedidoListView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView
+from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, EstadoPedidoCreateUpdateView, EstadoPedidoDeleteView, EstadoPedidoDetailView, EstadoPedidoListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, PedidoCreateUpdateView, PedidoDeleteView, PedidoDetailView, PedidoListView, PedidoRequeridoListView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView, PedidoBulkView
+
 
 app_name = 'compras'
 
@@ -32,10 +33,12 @@ urlpatterns = [
     path('Compra/delete/', CompraDeleteView.as_view(), name='CompraDeleteView'),
 
     path('Pedido/', PedidoListView.as_view(), name='PedidoListView'),
+    path('Pedido/requerido/', PedidoRequeridoListView.as_view(), name='PedidoRequeridoListView'),
     path('Pedido/<int:pk>/', PedidoDetailView.as_view(), name='PedidoDetailView'),
     path('Pedido/create/', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),
     path('Pedido/update/<int:pk>', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),
     path('Pedido/delete/', PedidoDeleteView.as_view(), name='PedidoDeleteView'),
+    path('Pedido/bulk/', PedidoBulkView.as_view(), name='PedidoBulkView'),
 
     path('CompraDetalle/', CompraDetalleListView.as_view(), name='CompraDetalleListView'),
     path('CompraDetalle/<int:pk>/', CompraDetalleDetailView.as_view(), name='CompraDetalleDetailView'),

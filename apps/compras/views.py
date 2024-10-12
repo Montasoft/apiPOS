@@ -1,12 +1,16 @@
 from django.shortcuts import render
 
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
+
+from rest_framework.response import Response
 from .models import Compra, EstadoCompra, EstadoPedido, Pedido, Proveedor, CompraDetalle, PagoCompra
 from .serializers import CompraDetalleDetalleSerializer, CompraDetalleSerializer, CompraListaSerializer, CompraDetalleListaSerializer, EstadoCompraListaSerializer, EstadoCompraDetalleSerializer, EstadoPedidoDetalleSerializer, EstadoPedidoListaSerializer, PagoCompraDetalleSerializer, PedidoDetalleSerializer, PedidoListaSerializer, ProveedorListaSerializer, ProveedorDetalleSerializer, PagoCompraListaSerializer
 from apps.baseapp.views import BaseCreateUpdateView, BaseDeleteView, BaseListView
 
+import logging
+logger = logging.getLogger(__name__)
 
 ########################################################################################
 ########  VISTAS GENÉRICAS PARA LISTA DE CADA MODELO ###################################
@@ -31,9 +35,18 @@ class CompraListView(BaseListView):
     serializer_class = CompraListaSerializer
 
 class PedidoListView(BaseListView):
-    queryset = Pedido.objects.all()
+    queryset = Pedido.objects.select_related('producto', 'proveedor').all()
     serializer_class = PedidoListaSerializer
 
+
+class PedidoRequeridoListView(BaseListView):
+    queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1) #para enviar nombre del producto y nombre de proveedor
+    serializer_class = PedidoListaSerializer # en el selializer estan incluidos los campos dichos
+
+
+class PedidoProveedorconRequeridoListView(BaseListView):
+    queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1)
+    serializer_class = PedidoListaSerializer
 
 class PagoCompraListView(BaseListView):
     queryset = PagoCompra.objects.all()
@@ -145,3 +158,72 @@ class CompraDetalleDeleteView(BaseDeleteView):
     model = CompraDetalle
     serializer_class = CompraDetalleDetalleSerializer
 
+
+
+
+
+class PedidoBulkView(generics.GenericAPIView):
+    queryset = Pedido.objects.all()
+    serializer_class = PedidoListaSerializer
+
+
+    def post(self, request, *args, **kwargs):
+        print("llegnado al post")
+        pedidos_data = request.data if isinstance(request.data, list) else [request.data]
+        resultados = []
+        errores = []
+
+        for pedido_data in pedidos_data:
+            serializer = self.get_serializer(data=pedido_data)
+            if serializer.is_valid():
+                self.perform_create(serializer)
+                resultados.append(serializer.data)
+            else:
+                errores.append(serializer.errors)
+
+        if errores:
+            return Response({'resultados': resultados, 'errores': errores}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'resultados': resultados}, status=status.HTTP_201_CREATED)
+
+    def put(self, request, *args, **kwargs):
+        logger.warning(f"Llegnado al post: {request.data}")
+
+        pedidos_data = request.data if isinstance(request.data, list) else [request.data]
+        resultados = []
+        errores = []
+
+        for pedido_data in pedidos_data:
+            pedido_id = pedido_data.get('id', None)
+            if not pedido_id:
+                errores.append({'error': 'Falta el campo ID para actualizar el pedido.'})
+                continue
+
+            try:
+                instance = self.get_queryset().get(id=pedido_id)
+            except Pedido.DoesNotExist:
+                errores.append({'error': f'No se encontró el pedido con id {pedido_id}.'})
+                continue
+
+            serializer = self.get_serializer(instance, data=pedido_data, partial=True)
+            if serializer.is_valid():
+                #verificar si estado es 1(requerido) y cambiarlo a 2 (solicitado)
+                #logger.warning(f"Estado actual: {instance.estado_id}") 
+                if instance.estado_id== 1: 
+                    instance.estado_id = 2
+                self.perform_update(serializer)
+                resultados.append(serializer.data)
+            else:
+                errores.append(serializer.errors)
+
+        if errores:
+            return Response({'resultados': resultados, 'errores': errores}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'resultados': resultados}, status=status.HTTP_200_OK)
+
+    def perform_create(self, serializer):
+        user = "usuario1"  # O usar: self.request.user.username
+        serializer.save(creater=user, updater=user)
+
+    def perform_update(self, serializer):
+        instance = serializer.instance
+        instance.updater = 'Usuario'  # O usar: self.request.user.username
+        serializer.save(updater=instance.updater)

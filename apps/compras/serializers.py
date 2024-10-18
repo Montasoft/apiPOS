@@ -72,18 +72,18 @@ class CompraDetalleSerializer(serializers.ModelSerializer):
         fields = 'id', 'fecha_compra', 'proveedor', 'valor_compra', 'num_factura_proveedor', 'forma_pago', 'fecha_vence', 'fecha_recibido', 'nota', 'estado', 'get_absolute_url','state', 'created','creater','updated','updater','deleted','deleter',
 
 
-
-
 ####################################################################
 #lista de Pedidos
 class PedidoListaSerializer(serializers.ModelSerializer):
-    nombre_producto = serializers.CharField(source='producto.nombre', read_only=True)
-    nombre_proveedor = serializers.CharField(source='proveedor.nombre', read_only=True)
+    producto_nombre = serializers.CharField(source='producto.nombre', read_only=True)
+    proveedor_nombre = serializers.CharField(source='proveedor.nombre', read_only=True)
+    producto_costo = serializers.CharField(source='producto.costo', read_only=True)
+    producto_cantidad_x_empaque = serializers.CharField(source='producto.cantidad_x_empaque', read_only=True)
 
     class Meta:         
         model = Pedido
    #     fields = '__all__'
-        fields = 'id', 'producto', 'nombre_producto', 'estado', 'proveedor', 'nombre_proveedor', 'cantidad_solicitada', 'valor_esperado', 'get_absolute_url'
+        fields = 'id', 'producto', 'producto_nombre',  'producto_costo', 'producto_cantidad_x_empaque', 'estado', 'proveedor', 'proveedor_nombre', 'cantidad_solicitada', 'valor_esperado', 'get_absolute_url'
 
 #detalle de cada Pedido
 class PedidoDetalleSerializer(serializers.ModelSerializer):

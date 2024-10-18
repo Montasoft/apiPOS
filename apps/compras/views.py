@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
+from apps.inventario.models import Producto
 from rest_framework import generics, status
 from rest_framework.generics import RetrieveAPIView
 from rest_framework.pagination import LimitOffsetPagination
+
+from django.core.exceptions import ValidationError
 
 from rest_framework.response import Response
 from .models import Compra, EstadoCompra, EstadoPedido, Pedido, Proveedor, CompraDetalle, PagoCompra
@@ -119,6 +122,24 @@ class CompraCreateUpdateView(BaseCreateUpdateView):
 class PedidoCreateUpdateView(BaseCreateUpdateView):
     queryset = Pedido.objects.all()
     serializer_class = PedidoDetalleSerializer
+
+    # def perform_create(self, serializer):
+    #     # Obtén el ID del producto desde los datos que se reciben en la solicitud
+    #     producto_id = self.request.data.get('producto')
+    #     costo = self.request.data.get('costo')
+
+    #     # Verifica si el producto existe
+    #     try:
+    #         producto = Producto.objects.get(id=producto_id)
+    #     except Producto.DoesNotExist:
+    #         raise ValidationError("El producto con el ID proporcionado no existe.")
+
+    #     # Obtén el costo del producto
+    #     cantidad_solicitada = producto.cantidad_x_empaque
+    #     valor_esperado = costo
+
+    #     # Guarda el pedido con el costo del producto
+    #     serializer.save(valor_esperado=valor_esperado, cantidad_solicitada=cantidad_solicitada)
 
 class CompraDetalleCreateUpdateView(BaseCreateUpdateView):
     queryset = CompraDetalle.objects.all()

@@ -1,7 +1,7 @@
 # urls.py
 
 from django.urls import path
-from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, EstadoPedidoCreateUpdateView, EstadoPedidoDeleteView, EstadoPedidoDetailView, EstadoPedidoListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, PedidoCreateUpdateView, PedidoDeleteView, PedidoDetailView, PedidoListView, PedidoRequeridoListView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView, PedidoBulkView
+from .views import CompraCreateUpdateView, CompraDeleteView, CompraDetailView, CompraDetalleCreateUpdateView, CompraDetalleDeleteView, CompraDetalleDetailView, EstadoCompraCreateUpdateView, EstadoCompraDeleteView, EstadoCompraDetailView, EstadoCompraListView, EstadoPedidoCreateUpdateView, EstadoPedidoDeleteView, EstadoPedidoDetailView, EstadoPedidoListView, PagoCompraCreateUpdateView, PagoCompraDeleteView, PagoCompraDetailView, PedidoCreateUpdateView, PedidoDeleteView, PedidoDetailView, PedidoListView, PedidoRequeridoListView, PedidoSolicitadoListView, ProveedorListView, CompraListView, CompraDetalleListView, PagoCompraListView, ProveedorDetailView, ProveedorCreateUpdateView, ProveedorDeleteView, PedidoBulkView
 
 
 app_name = 'compras'
@@ -34,6 +34,9 @@ urlpatterns = [
 
     path('Pedido/', PedidoListView.as_view(), name='PedidoListView'),
     path('Pedido/requerido/', PedidoRequeridoListView.as_view(), name='PedidoRequeridoListView'),
+    path('Pedido/solicitado/', PedidoSolicitadoListView.as_view(), name='PedidoSolicitadoListView'),
+
+
     path('Pedido/<int:pk>/', PedidoDetailView.as_view(), name='PedidoDetailView'),
     path('Pedido/create/', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),
     path('Pedido/update/<int:pk>', PedidoCreateUpdateView.as_view(), name='PedidoCreateUpdateView'),

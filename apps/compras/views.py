@@ -43,9 +43,13 @@ class PedidoListView(BaseListView):
 
 
 class PedidoRequeridoListView(BaseListView):
-    queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1) #para enviar nombre del producto y nombre de proveedor
+    queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1).exclude(state=2) #para enviar nombre del producto y nombre de proveedor
     serializer_class = PedidoListaSerializer # en el selializer estan incluidos los campos dichos
 
+
+class PedidoSolicitadoListView(BaseListView):
+    queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=2).exclude(state=2) #para enviar nombre del producto y nombre de proveedor
+    serializer_class = PedidoListaSerializer # en el selializer estan incluidos los campos dichos
 
 class PedidoProveedorconRequeridoListView(BaseListView):
     queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1)

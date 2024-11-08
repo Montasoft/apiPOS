@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 
 from rest_framework.response import Response
 from .models import Compra, EstadoCompra, EstadoPedido, Pedido, Proveedor, CompraDetalle, PagoCompra
-from .serializers import CompraDetalleDetalleSerializer, CompraDetalleSerializer, CompraListaSerializer, CompraDetalleListaSerializer, EstadoCompraListaSerializer, EstadoCompraDetalleSerializer, EstadoPedidoDetalleSerializer, EstadoPedidoListaSerializer, PagoCompraDetalleSerializer, PedidoDetalleSerializer, PedidoListaSerializer, ProveedorListaSerializer, ProveedorDetalleSerializer, PagoCompraListaSerializer
+from .serializers import CompraDetalleDetalleSerializer, CompraDetalleSerializer, CompraListaSerializer, CompraDetalleListaSerializer, EstadoCompraListaSerializer, EstadoCompraDetalleSerializer, EstadoPedidoDetalleSerializer, EstadoPedidoListaSerializer, PagoCompraDetalleSerializer, PedidoDetalleSerializer, PedidoListaSerializer, PedidoSolicitadoListaSerializer, ProveedorListaSerializer, ProveedorDetalleSerializer, PagoCompraListaSerializer
 from apps.baseapp.views import BaseCreateUpdateView, BaseDeleteView, BaseListView
 
 import logging
@@ -49,7 +49,7 @@ class PedidoRequeridoListView(BaseListView):
 
 class PedidoSolicitadoListView(BaseListView):
     queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=2).exclude(state=2) #para enviar nombre del producto y nombre de proveedor
-    serializer_class = PedidoListaSerializer # en el selializer estan incluidos los campos dichos
+    serializer_class = PedidoSolicitadoListaSerializer # en el selializer estan incluidos los campos dichos
 
 class PedidoProveedorconRequeridoListView(BaseListView):
     queryset = Pedido.objects.select_related('producto', 'proveedor').filter(estado=1)

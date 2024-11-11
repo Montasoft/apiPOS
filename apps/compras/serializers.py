@@ -83,7 +83,7 @@ class PedidoListaSerializer(serializers.ModelSerializer):
     class Meta:         
         model = Pedido
    #     fields = '__all__'
-        fields = 'id', 'producto', 'producto_nombre',  'producto_costo', 'producto_cantidad_x_empaque', 'estado', 'proveedor', 'proveedor_nombre', 'cantidad_solicitada', 'valor_esperado', 'get_absolute_url'
+        fields = 'id', 'producto', 'producto_nombre',  'producto_costo', 'producto_cantidad_x_empaque', 'estado', 'proveedor', 'proveedor_nombre', 'cantidad_solicitada', 'valor_esperado', 'cantidad_recibida', 'valor_recibido', 'get_absolute_url'
 
 #lista de Pedidos en estado solicitado
 class PedidoSolicitadoListaSerializer(serializers.ModelSerializer):

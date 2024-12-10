@@ -92,8 +92,7 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
 
     def perform_create(self, serializer):
         # Asignar el valor del campo 'updater' y 'creater' antes de guardar la instancia
-        user = "usuario1"  
-        user = self.request.user
+        user = self.request.user.username
         print(self.request.user, "----" )
         serializer.save(creater=user, updater=user)
 
@@ -102,8 +101,7 @@ class BaseCreateUpdateView(generics.RetrieveUpdateAPIView, generics.CreateAPIVie
         # Obtén la instancia del objeto a actualizar
         instance = serializer.instance
         
-        # Modifica cualquier campo adicional que no provenga del formulario
-        instance.updater = 'Usuario'
+        # Agignar el usuario actual que modifica el registro
         instance.updater = self.request.user.username
         
         # Guarda los cambios del serializador junto con el campo adicional
@@ -153,7 +151,7 @@ class BaseDeleteView(APIView):
             return Response({"error": f"{self.model.__name__} no encontrado"}, status=status.HTTP_404_NOT_FOUND)
 
         # Marcar registro como eliminado
-        instance.deleter = 'Usuario'
+        instance.deleter = self.request.user.username
         instance.state = 2
         instance.deleted = timezone.now()
         instance.save()

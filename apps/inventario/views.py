@@ -6,6 +6,16 @@ from rest_framework.pagination import LimitOffsetPagination
 from .models import Categoria, SubCategoria, EstadoProducto, Producto
 from .serializers import CategoriaDetalleSerializer, CategoriaListaSerializer, EstadoProductoDetalleSerializer, EstadoProductoListaSerializer, ProductoDetalleSerializer, ProductoListaSerializer, SubCategoriaDetalleSerializer, SubCategoriaListaSerializer
 from apps.baseapp.views import BaseCreateUpdateView, BaseDeleteView, BaseListView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter
+
+from rest_framework.pagination import PageNumberPagination
+
+class CustomPagination(PageNumberPagination):
+    page_size = 50  # Tamaño por página
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 
 
 ########################################################################################
@@ -27,7 +37,12 @@ class EstadoProductoListView(BaseListView):
 class ProductoListView(BaseListView):
     queryset = Producto.objects.all()
     serializer_class = ProductoListaSerializer
-
+    pagination_class = CustomPagination
+    
+    #filtros
+    filter_backends = [DjangoFilterBackend, OrderingFilter]
+    filterset_fields = ['categoria', 'nombre']
+    ordering_fields = ['nombre', 'pricio']
 
 ########################################################################################
 ########  VISTAS GENÉRICAS PARA DETALLES DE CADA MODELO ################################

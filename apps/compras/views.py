@@ -12,8 +12,11 @@ from .models import Compra, EstadoCompra, EstadoPedido, Pedido, Proveedor, Compr
 from .serializers import CompraDetalleDetalleSerializer, CompraDetalleSerializer, CompraListaSerializer, CompraDetalleListaSerializer, EstadoCompraListaSerializer, EstadoCompraDetalleSerializer, EstadoPedidoDetalleSerializer, EstadoPedidoListaSerializer, PagoCompraDetalleSerializer, PedidoDetalleSerializer, PedidoListaSerializer, PedidoSolicitadoListaSerializer, ProveedorListaSerializer, ProveedorDetalleSerializer, PagoCompraListaSerializer
 from apps.baseapp.views import BaseCreateUpdateView, BaseDeleteView, BaseListView
 
+
 import logging
 logger = logging.getLogger(__name__)
+
+
 
 ########################################################################################
 ########  VISTAS GENÉRICAS PARA LISTA DE CADA MODELO ###################################
@@ -245,10 +248,10 @@ class PedidoBulkView(generics.GenericAPIView):
         return Response({'resultados': resultados}, status=status.HTTP_200_OK)
 
     def perform_create(self, serializer):
-        user = "usuario1"  # O usar: self.request.user.username
+        user = self.request.user.username
         serializer.save(creater=user, updater=user)
 
     def perform_update(self, serializer):
         instance = serializer.instance
-        instance.updater = 'Usuario'  # O usar: self.request.user.username
+        instance.updater = self.request.user.username
         serializer.save(updater=instance.updater)
